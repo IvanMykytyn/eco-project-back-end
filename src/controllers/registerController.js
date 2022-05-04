@@ -8,7 +8,7 @@ module.exports = {
       // Get user input
       const { first_name, last_name, date_of_birth, email, password } =
         req.body;
-      console.log(first_name, last_name, date_of_birth, email, password);
+      // console.log(first_name, last_name, date_of_birth, email, password);
       //Encrypt user password
       const encryptedPassword = await bcrypt.hash(password, 10);
 
@@ -22,13 +22,9 @@ module.exports = {
       );
 
       // Create token
-      const token = jwt.sign(
-        { email, first_name, last_name, date_of_birth },
-        process.env.TOKEN_KEY,
-        {
-          expiresIn: "1d",
-        }
-      );
+      const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY, {
+        expiresIn: "1d",
+      });
       // save user token
       user.token = token;
 

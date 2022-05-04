@@ -23,7 +23,7 @@ module.exports = {
       }
 
       // Create token
-      const token = jwt.sign({ email }, process.env.TOKEN_KEY, {
+      const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY, {
         expiresIn: "1d",
       });
 

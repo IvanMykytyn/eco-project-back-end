@@ -4,10 +4,11 @@ module.exports =
         {
             try
             {
-                req.body =JSON.parse(req.body)
-                next()
+                res.send(req.body)
+                res.end()
+                //next()
             }catch (e) {
-                res.status(500).send()
+                res.status(500).send(e.message)
                 res.end()
             }
 

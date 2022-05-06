@@ -9,7 +9,7 @@ const {registerController} = require("../controllers/registerController")
 
 let registerRouter = Router()
 
-registerRouter.post("/",parseUserToJSON, passwordValidity, emailValidity, firstNameValidity,
+registerRouter.post("/", passwordValidity, emailValidity, firstNameValidity,
     lastNameValidity, isInputDataExist, isUserAlreadyExist, dateValidity,
     registerController)
 

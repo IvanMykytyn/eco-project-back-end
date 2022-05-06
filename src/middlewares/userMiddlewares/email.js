@@ -7,14 +7,14 @@ module.exports = {
          let {email} = req.body;
          let isValid = validator.validate(email);
          if(!isValid) {
-             res.status(400).send("bad email")
+             res.status(400).send({message: "bad email"})
              res.end()
          }else{
              next()
          }
         }catch (e)
         {
-            res.status(500).send(e.message)
+            res.status(500).send({message: e.message})
             res.end()
         }
     }

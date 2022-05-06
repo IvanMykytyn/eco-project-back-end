@@ -13,13 +13,13 @@ module.exports = {
 
       // TODO something if no such an user
       if (!user) {
-        return res.status(401).send({ errorMsg: "Error Auth" });
+        return res.status(401).send({ message: "Error Auth" });
       }
 
       // check if correct password
       const isPasswordCorrect = await bcrypt.compare(password, user.password);
       if (!isPasswordCorrect) {
-        return res.status(401).send({ errorMsg: "Invalid password" });
+        return res.status(401).send({ message: "Invalid password" });
       }
 
       // Create token

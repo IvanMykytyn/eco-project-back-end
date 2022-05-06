@@ -32,7 +32,7 @@ module.exports = {
       return res.status(201).json(user);
     } catch (e) {
       console.log(e);
-      res.status(500).send(e.message);
+      res.status(500).send({message: e.message});
       res.end();
     }
   },

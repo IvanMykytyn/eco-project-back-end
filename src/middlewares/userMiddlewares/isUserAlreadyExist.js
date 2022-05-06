@@ -10,13 +10,13 @@ module.exports = {
             // Validate if user exist in our database
             const oldUser = await User.findOne({email});
             if (oldUser) {
-                res.status(409).send("User Already Exist. Please Login");
+                res.status(409).send({message: "User Already Exist. Please Login"});
                 res.end()
             } else {
                 next()
             }
         }catch (e) {
-            res.status(500).send(e.message)
+            res.status(500).send({message: e.message})
             res.end()
         }
 

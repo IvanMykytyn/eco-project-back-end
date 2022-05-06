@@ -27,8 +27,12 @@ module.exports = {
         expiresIn: "1d",
       });
 
+      user.token = token;
+
+
+
       // return user and token
-      return res.status(201).json({ user, token });
+      return res.status(201).json(user);
     } catch (error) {
       console.log(error);
       res.status(500).send(e.message);

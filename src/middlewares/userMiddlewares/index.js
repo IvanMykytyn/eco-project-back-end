@@ -5,6 +5,7 @@ const {isUserAlreadyExist} = require("./isUserAlreadyExist")
 const {lastNameValidity} = require("./last_name")
 const {firstNameValidity} = require("./first_name")
 const {dateValidity} = require("./date")
+const {parseUserToJSON} = require("./JSONParse")
 
 module.exports = {
     emailValidity,
@@ -13,5 +14,6 @@ module.exports = {
     isUserAlreadyExist,
     lastNameValidity,
     firstNameValidity,
-    dateValidity
+    dateValidity,
+    parseUserToJSON
 }

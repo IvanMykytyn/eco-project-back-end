@@ -1,6 +1,10 @@
-const { createUser } = require("../services/userService");
+const {
+  createUserByGoogle,
+  findUserByEmail,
+} = require("../services/userService");
 const axios = require("axios");
 const { google } = require("googleapis");
+const jwt = require("jsonwebtoken");
 
 // CLIENT_ID - CLIENT_SECRET - REDIRECT_URL
 const oauth2Client = new google.auth.OAuth2(
@@ -44,12 +48,29 @@ async function getGoogleUser({ code }) {
 }
 
 module.exports = {
-  async GoogleAuthController(req, res) {
+  async GoogleAuthRedirect(req, res) {
     res.redirect(getGoogleAuthURL());
   },
-  async GoogleAuthController2(req, res) {
+  async GoogleAuthController(req, res) {
     const data = await getGoogleUser(req.query);
     const { id, email, given_name, family_name } = data;
-    res.status(200).json({ id, email, given_name, family_name });
+
+    const isEmailAlreadySigned = await findUserByEmail(email);
+
+    // TODO something if no such an user
+    if (isEmailAlreadySigned) {
+      return res.status(401).send({ message: "This email has already exist" });
+    }
+
+    const user = await createUserByGoogle(given_name, family_name, email);
+
+    // Create token
+    const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY, {
+      expiresIn: "1d",
+    });
+    // save user token
+    user.token = token;
+
+    res.status(200).json(user);
   },
 };

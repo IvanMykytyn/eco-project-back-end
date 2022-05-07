@@ -4,15 +4,11 @@ const express = require("express");
 const app = express();
 
 const {
+  GoogleAuthRedirect,
   GoogleAuthController,
-  GoogleAuthController2,
 } = require("./src/controllers/GoogleAuthController");
 
-const {
-  registerRouter,
-  loginRouter,
-  GoogleAuthRouter,
-} = require("./src/routes");
+const { registerRouter, loginRouter } = require("./src/routes");
 
 const {
   notFoundErrorController,
@@ -23,9 +19,8 @@ app.use(express.json());
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
 
-app.get("/auth", GoogleAuthController);
-
-app.get("/auth/google/profile", GoogleAuthController2);
+app.get("/auth", GoogleAuthRedirect);
+app.get("/auth/google/profile", GoogleAuthController);
 
 app.all("*", notFoundErrorController);
 

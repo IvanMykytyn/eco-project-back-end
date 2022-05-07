@@ -18,6 +18,15 @@ module.exports = {
 
     return user;
   },
+  async createUserByGoogle(first_name, last_name, email) {
+    const user = await User.create({
+      first_name,
+      last_name,
+      email: email.toLowerCase(), // sanitize: convert email to lowercase
+    });
+
+    return user;
+  },
   async findUserByEmail(inputEmail) {
     const email = inputEmail.toLowerCase();
     const user = await User.findOne({ email });

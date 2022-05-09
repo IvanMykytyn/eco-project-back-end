@@ -2,6 +2,7 @@ const {
   createUserByGoogle,
   findUserByEmail,
 } = require("../services/userService");
+
 const axios = require("axios");
 const { google } = require("googleapis");
 const jwt = require("jsonwebtoken");
@@ -10,6 +11,7 @@ const jwt = require("jsonwebtoken");
 const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
+  // https://eco-project-back-end.herokuapp.com/auth/google/profile
   "http://localhost:3000/auth/google/profile"
 );
 
@@ -26,6 +28,7 @@ function getGoogleAuthURL() {
     scope: scopes,
   });
 }
+
 async function getGoogleUser({ code }) {
   const { tokens } = await oauth2Client.getToken(code);
 
@@ -51,23 +54,21 @@ module.exports = {
   async GoogleAuthRedirect(req, res) {
     res.redirect(getGoogleAuthURL());
   },
+
   async GoogleAuthController(req, res) {
     const data = await getGoogleUser(req.query);
     const { id, email, given_name, family_name } = data;
 
-    const isEmailAlreadySigned = await findUserByEmail(email);
-
-    // TODO something if no such an user
-    if (isEmailAlreadySigned) {
-      return res.status(401).send({ message: "This email has already exist" });
+    var user = await findUserByEmail(email);
+    if (!user) {
+      user = await createUserByGoogle(given_name, family_name, email);
     }
-
-    const user = await createUserByGoogle(given_name, family_name, email);
 
     // Create token
     const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY, {
       expiresIn: "1d",
     });
+
     // save user token
     user.token = token;
 

@@ -19,7 +19,9 @@ app.use(express.json());
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
 
-app.get("/auth", GoogleAuthRedirect);
+// url for register or login
+app.get("/auth/google", GoogleAuthRedirect);
+// url for redirecting
 app.get("/auth/google/profile", GoogleAuthController);
 
 app.all("*", notFoundErrorController);

@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("./src/configs/database").connect();
+const cors = require("cors");
 const express = require("express");
 const app = express();
 
@@ -15,6 +16,9 @@ const {
 } = require("./src/controllers/notFoundErrorController");
 
 app.use(express.json());
+app.use(cors({
+    origin: "*"
+}));
 
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);

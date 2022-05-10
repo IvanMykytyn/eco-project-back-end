@@ -1,7 +1,8 @@
 const {Router} = require("express")
 const {
     emailValidity, passwordValidity, firstNameValidity,
-    isInputDataExist, isUserAlreadyExist, lastNameValidity, dateValidity
+    isInputDataExist, isUserAlreadyExist, lastNameValidity, dateFormatValidity,
+    isDateOutsideTheCurrentDate
 } = require("../middlewares/userMiddlewares")
 
 const {registerController} = require("../controllers/registerController")
@@ -9,7 +10,8 @@ const {registerController} = require("../controllers/registerController")
 let registerRouter = Router()
 
 registerRouter.post("/", passwordValidity, emailValidity, firstNameValidity,
-    lastNameValidity, isInputDataExist, isUserAlreadyExist, dateValidity,
+    lastNameValidity, isInputDataExist, isUserAlreadyExist, dateFormatValidity,
+    isDateOutsideTheCurrentDate,
     registerController)
 
 module.exports = registerRouter

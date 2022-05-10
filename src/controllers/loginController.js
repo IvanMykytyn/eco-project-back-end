@@ -13,13 +13,13 @@ module.exports = {
 
       // TODO something if no such an user
       if (!user) {
-        return res.status(401).send({ errorMsg: "Error Auth" });
+        return res.status(401).send({ message: "Error Auth" });
       }
 
       // check if correct password
       const isPasswordCorrect = await bcrypt.compare(password, user.password);
       if (!isPasswordCorrect) {
-        return res.status(401).send({ errorMsg: "Invalid password" });
+        return res.status(401).send({ message: "Invalid password" });
       }
 
       // Create token
@@ -27,8 +27,12 @@ module.exports = {
         expiresIn: "1d",
       });
 
+      user.token = token;
+
+
+
       // return user and token
-      return res.status(201).json({ user, token });
+      return res.status(201).json(user);
     } catch (error) {
       console.log(error);
       res.status(500).send(e.message);

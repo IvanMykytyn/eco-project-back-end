@@ -4,7 +4,7 @@ const {isInputDataExist} = require("./validateInputData")
 const {isUserAlreadyExist} = require("./isUserAlreadyExist")
 const {lastNameValidity} = require("./last_name")
 const {firstNameValidity} = require("./first_name")
-const {dateValidity} = require("./date")
+const {dateFormatValidity, isDateOutsideTheCurrentDate} = require("./date")
 
 module.exports = {
     emailValidity,
@@ -13,5 +13,6 @@ module.exports = {
     isUserAlreadyExist,
     lastNameValidity,
     firstNameValidity,
-    dateValidity
+    dateFormatValidity,
+    isDateOutsideTheCurrentDate
 }

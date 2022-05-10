@@ -13,14 +13,13 @@ passwordSchema
 
 module.exports = {
     passwordValidity(req, res, next) {
-        try{
+        try {
             let isValid = passwordSchema.validate(req.body.password) // true or false
 
             if (typeof (req.body.password) !== "string") {
                 res.statusCode = 400
-                res.send("password must be a string")
+                res.send({message: "password must be a string"})
                 res.end()
-
             } else if (!isValid) {
                 res.statusCode = 400
                 // array of objects {details: true}
@@ -29,13 +28,13 @@ module.exports = {
                 let responseData = validationData.map((item) => {
                     return item.message
                 })
-                res.send(responseData)
+                res.send({message: responseData[0]})
                 res.end()
             } else {
                 next()
             }
-        }catch (e) {
-            res.status(500).send(e.message)
+        } catch (e) {
+            res.status(500).send({message: e.message})
             res.end()
         }
     }

@@ -4,9 +4,16 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 
-const {registerRouter, loginRouter} = require("./src/routes");
+const {
+  GoogleAuthRedirect,
+  GoogleAuthController,
+} = require("./src/controllers/GoogleAuthController");
 
-const {notFoundErrorController} = require("./src/controllers/notFoundErrorController");
+const { registerRouter, loginRouter } = require("./src/routes");
+
+const {
+  notFoundErrorController,
+} = require("./src/controllers/notFoundErrorController");
 
 app.use(express.json());
 app.use(cors({
@@ -16,6 +23,11 @@ app.use(cors({
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
 
-app.all("*", notFoundErrorController)
+// url for register or login
+app.get("/auth/google", GoogleAuthRedirect);
+// url for redirecting
+app.get("/auth/google/profile", GoogleAuthController);
+
+app.all("*", notFoundErrorController);
 
 module.exports = app;

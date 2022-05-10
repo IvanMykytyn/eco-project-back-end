@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const googleUser = require("../models/googleUser");
 
 module.exports = {
   async createUser(
@@ -14,6 +15,15 @@ module.exports = {
       date_of_birth,
       email: email.toLowerCase(), // sanitize: convert email to lowercase
       password: encryptedPassword,
+    });
+
+    return user;
+  },
+  async createUserByGoogle(first_name, last_name, email) {
+    const user = await googleUser.create({
+      first_name,
+      last_name,
+      email: email.toLowerCase(), // sanitize: convert email to lowercase
     });
 
     return user;

@@ -6,6 +6,7 @@ lastNameSchema
     .is().max(25, "last name must be no more than 25 characters")
     .has().not().digits(0, "last name should not include digits")
     .has().not().spaces(0, "last name should not include spaces")
+    .has().not().symbols(0, "last name should not include special symbols")
 
 
 module.exports = {

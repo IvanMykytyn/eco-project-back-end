@@ -6,6 +6,8 @@ firstNameSchema
     .is().max(25, "first name must be no more than 25 characters")
     .has().not().digits(0, "first name should not include digits")
     .has().not().spaces(0, "first name should not include spaces")
+    .has().not().symbols(0, "first name should not include special symbols")
+
 
 
 module.exports = {

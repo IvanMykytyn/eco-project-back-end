@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { findUserByEmail } = require("../services/userService");
+const {sendResponse} = require("../helpers/sendResponse");
 
 module.exports = {
   async loginController(req, res) {
@@ -29,14 +30,10 @@ module.exports = {
 
       user.token = token;
 
-
-
       // return user and token
       return res.status(201).json(user);
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({message: e.message});
-      res.end();
+    } catch (e) {
+      sendResponse(res, 500, e.message)
     }
   },
 };

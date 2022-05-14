@@ -1,4 +1,5 @@
 const User = require("../../models/user");
+const {sendResponse} = require("../../helpers/sendResponse");
 
 module.exports = {
     async isUserAlreadyExist(req, res, next) {
@@ -10,14 +11,12 @@ module.exports = {
             // Validate if user exist in our database
             const oldUser = await User.findOne({email});
             if (oldUser) {
-                res.status(409).send({message: "User Already Exist. Please Login"});
-                res.end()
+                sendResponse(res, 409, "User Already Exist. Please Login")
             } else {
                 next()
             }
         }catch (e) {
-            res.status(500).send({message: e.message})
-            res.end()
+            sendResponse(res, 500, e.message)
         }
 
     }

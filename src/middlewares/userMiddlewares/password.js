@@ -1,6 +1,7 @@
 // length 8-25 characters, min 1 upperCase character, min 1 lowercase character, withoutSpaces
 //min 1 digit
 let passwordValidator = require('password-validator');
+const {sendResponse} = require("../../helpers/sendResponse");
 let passwordSchema = new passwordValidator();
 
 passwordSchema
@@ -17,25 +18,20 @@ module.exports = {
             let isValid = passwordSchema.validate(req.body.password) // true or false
 
             if (typeof (req.body.password) !== "string") {
-                res.statusCode = 400
-                res.send({message: "password must be a string"})
-                res.end()
+                sendResponse(res, 400, "password must be a string")
             } else if (!isValid) {
-                res.statusCode = 400
                 // array of objects {details: true}
                 let validationData = passwordSchema.validate(req.body.password, {details: true})
                 // filter it
                 let responseData = validationData.map((item) => {
                     return item.message
                 })
-                res.send({message: responseData[0]})
-                res.end()
+                sendResponse(res, 400, responseData[0])
             } else {
                 next()
             }
         } catch (e) {
-            res.status(500).send({message: e.message})
-            res.end()
+            sendResponse(res, 500, e.message)
         }
     }
 

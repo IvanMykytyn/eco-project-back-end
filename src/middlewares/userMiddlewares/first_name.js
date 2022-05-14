@@ -1,4 +1,5 @@
 let passwordValidator = require('password-validator');
+const {sendResponse} = require("../../helpers/sendResponse");
 let firstNameSchema = new passwordValidator();
 
 firstNameSchema
@@ -17,25 +18,20 @@ module.exports = {
             let isValid = firstNameSchema.validate(req.body.first_name) // true or false
 
             if (typeof (req.body.first_name) !== "string") {
-                res.statusCode = 400
-                res.send({message: "first name must be a string"})
-                res.end()
+                sendResponse(res, 400, "first name must be a string")
             } else if (!isValid) {
-                res.statusCode = 400
                 // array of objects {details: true}
                 let validationData = firstNameSchema.validate(req.body.first_name, {details: true})
                 // filter it
                 let responseData = validationData.map((item) => {
                     return item.message
                 })
-                res.send({message: responseData[0]})
-                res.end()
+                sendResponse(res, 400, responseData[0])
             } else {
                 next()
             }
         }catch (e) {
-            res.status(500).send({message: e.message})
-            res.end()
+            sendResponse(res, 500, e.message)
         }
 
     }

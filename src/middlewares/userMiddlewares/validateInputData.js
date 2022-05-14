@@ -1,3 +1,5 @@
+const {sendResponse} = require("../../helpers/sendResponse");
+
 module.exports = {
     isInputDataExist(req, res, next) {
         try {
@@ -6,14 +8,12 @@ module.exports = {
 
             // Validate user input
             if (!(email && password && first_name && last_name && date_of_birth)) {
-                res.status(400).send({message: "All input is required"});
-                res.end()
+                sendResponse(res, 400, "All input is required")
             } else {
                 next()
             }
         } catch (e) {
-            res.status(500).send({message: e.message})
-            res.end()
+            sendResponse(res, 500, e.message)
         }
 
     }

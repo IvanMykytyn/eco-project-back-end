@@ -1,4 +1,5 @@
 let validator = require("email-validator");
+const {sendResponse} = require("../../helpers/sendResponse");
 
 module.exports = {
     emailValidity(req,res,next){
@@ -7,15 +8,13 @@ module.exports = {
          let {email} = req.body;
          let isValid = validator.validate(email);
          if(!isValid) {
-             res.status(400).send({message: "bad email"})
-             res.end()
+             sendResponse(res, 400, "bad email")
          }else{
              next()
          }
         }catch (e)
         {
-            res.status(500).send({message: e.message})
-            res.end()
+            sendResponse(res, 500, e.message)
         }
     }
 }

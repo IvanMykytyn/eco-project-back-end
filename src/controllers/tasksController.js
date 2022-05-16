@@ -5,6 +5,8 @@ const {sendResponse} = require("../helpers/sendResponse");
 module.exports = {
     async tasksController(req, res) {
         try {
+            res.setHeader('Content-Type', 'image/png');
+
             const {activity_type, users_task_description, numerical_indicators, location, photos, userId} = req.body
 
             const task = {

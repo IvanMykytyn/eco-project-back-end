@@ -7,8 +7,8 @@ module.exports = {
             if(!Array.isArray(photos)){
                 throw new Error("\"photos\" should be an Array")
             }
-            if(photos.length > 4){
-                throw new Error("\"photos\" must be no more than 4 length")
+            if(photos.length > 3){
+                throw new Error("\"photos\" must be no more than 3 length")
             }
             for(let i = 0;i<photos.length;i++){
                 if(photos[i].type !== "Buffer"){

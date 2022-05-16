@@ -6,7 +6,7 @@ module.exports = {
         try {
             const {activity_type} = req.body
             if (typeof activity_type != "string") {
-                throw new Error("\"activity_type\" should be a string")
+                throw new Error(`\"activity_type\" should be a string, your type ${typeof activity_type}`)
             }
             if (!activityTypeEnum.includes(activity_type)) {
                 throw new Error("incorrect \"activity_type\"")

@@ -4,19 +4,32 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 
-const {GoogleAuthRedirect, GoogleAuthController, notFoundErrorController} = require("./src/controllers");
+const {
+  GoogleAuthRedirect,
+  GoogleAuthController,
+  notFoundErrorController,
+} = require("./src/controllers");
 
-const { registerRouter, loginRouter, activitiesRouter, taskRouter } = require("./src/routes");
+const {
+  registerRouter,
+  loginRouter,
+  activitiesRouter,
+  taskRouter,
+  ratingRouter,
+} = require("./src/routes");
 
 app.use(express.json());
-app.use(cors({
-    origin: "*"
-}));
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
-app.use("/activities", activitiesRouter)
-app.use("/task", taskRouter)
+app.use("/activities", activitiesRouter);
+app.use("/task", taskRouter);
+app.use("/rating", ratingRouter);
 
 // url for register or login
 app.get("/auth/google", GoogleAuthRedirect);

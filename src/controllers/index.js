@@ -4,6 +4,7 @@ const {registerController} = require("./registerController")
 const {loginController} = require("./loginController")
 const {activitiesController} = require("./activitiesController")
 const {tasksController} = require("./tasksController")
+const {userInformationController} = require("./userInformationController")
 
 module.exports =
     {
@@ -13,5 +14,6 @@ module.exports =
         registerController,
         loginController,
         activitiesController,
-        tasksController
+        tasksController,
+        userInformationController
     }

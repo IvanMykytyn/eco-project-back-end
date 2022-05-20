@@ -7,7 +7,8 @@ const app = express();
 
 const {GoogleAuthRedirect, GoogleAuthController, notFoundErrorController} = require("./src/controllers");
 
-const { registerRouter, loginRouter, activitiesRouter, taskRouter, taskHistoryRouter } = require("./src/routes");
+const { registerRouter, loginRouter, activitiesRouter, taskRouter, taskHistoryRouter, userInformationRouter } = require("./src/routes");
+
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,6 +21,7 @@ app.use("/login", loginRouter);
 app.use("/activities", activitiesRouter)
 app.use("/task", taskRouter)
 app.use("/taskHistory", taskHistoryRouter)
+app.use("/userInformation", userInformationRouter)
 
 // url for register or login
 app.get("/auth/google", GoogleAuthRedirect);

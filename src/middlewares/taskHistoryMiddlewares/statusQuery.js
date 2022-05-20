@@ -6,7 +6,7 @@ module.exports = {
         const {status} = req.query
         try{
             if(status !== "any" && !statusEnum.includes(status)){
-                throw new Error("status query should be one of ('any', 'pending', 'testing','rejected', 'accepted' )")
+                throw new Error("status query should be one of ('any', 'pending', 'testing','rejected', 'accepted')")
             }
             next()
         }catch (e) {

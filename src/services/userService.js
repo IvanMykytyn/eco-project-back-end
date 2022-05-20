@@ -41,5 +41,9 @@ module.exports = {
     user.points += (activity.number_of_points * numericalIndicators)
     user.save()
     return user.points
+  },
+
+  async updateUserInformation(user){
+    return User.findOneAndUpdate({_id: user.userId}, user, {new: true});
   }
 };

@@ -7,7 +7,7 @@ module.exports = {
             const {amount} = req.query
             if (amount === "all") {
                 next()
-            }else if(!Number.isInteger(Number(amount)) || Number(amount) < 0){
+            }else if(!Number.isInteger(Number(amount)) || Number(amount) <= 0){
                 throw new Error("bad amount query")
             }else{
                 next()

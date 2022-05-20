@@ -56,6 +56,7 @@ app.get("/profile", async (req, res) => {
 
   // save user token
   user.token = token;
+
   // https://eco-ntinuum.herokuapp.com/profile
   res.redirect("http://localhost:3001/profile", 200, user);
 });

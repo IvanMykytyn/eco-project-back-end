@@ -1,9 +1,11 @@
+
 const loginRouter = require("./loginRouter")
 const registerRouter = require("./registerRouter")
 const activitiesRouter = require("./activitiesRouter")
 const taskRouter = require("./taskRouter")
 const taskHistoryRouter = require("./taskHistoryRouter");
 const userInformationRouter = require("./userInformationRouter")
+const ratingRouter = require("./ratingRouter");
 
 module.exports ={
         loginRouter,
@@ -11,5 +13,7 @@ module.exports ={
         activitiesRouter,
         taskRouter,
         taskHistoryRouter,
-        userInformationRouter
+        userInformationRouter,
+        ratingRouter
     }
+

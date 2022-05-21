@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const {activityTypeEnum, statusEnum} = require("../helpers/constants/constants");
 
 const taskSchema = new mongoose.Schema({

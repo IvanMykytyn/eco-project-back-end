@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const googleUser = require("../models/googleUser");
+const activitySchema = require("../models/activity")
 
 module.exports = {
   async createUser(
@@ -34,4 +35,15 @@ module.exports = {
 
     return user;
   },
+  async addPointsToTheUser(numericalIndicators, activity_type, user_id){
+    const activity = await  activitySchema.findOne({type: activity_type})
+    const user = await User.findOne({_id: user_id})
+    user.points += (activity.number_of_points * numericalIndicators)
+    user.save()
+    return user.points
+  },
+
+  async updateUserInformation(user){
+    return User.findOneAndUpdate({_id: user.userId}, user, {new: true});
+  }
 };

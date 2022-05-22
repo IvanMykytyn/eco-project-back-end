@@ -1,7 +1,9 @@
-const loginRouter = require("./loginRouter")
-const registerRouter = require("./registerRouter")
+const loginRouter = require("./loginRouter");
+const registerRouter = require("./registerRouter");
+const googleAuthRouter = require("./googleAuthRouter");
 
-module.exports ={
-        loginRouter,
-        registerRouter
-    }
+module.exports = {
+  loginRouter,
+  registerRouter,
+  googleAuthRouter,
+};

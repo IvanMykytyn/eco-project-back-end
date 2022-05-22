@@ -1,10 +1,12 @@
-const {getUserTasks} = require("../services/taskService");
+const {getUserTasks, getNumberOfUsersTasks} = require("../services/taskService");
 const activity = require("../models/activity")
 
 module.exports = {
     async taskHistoryController(req, res) {
-        const {status, category, amount} = req.query
-        const tasks = await getUserTasks(res.locals.userId, status, category, amount)
+        const {status, category, amount, page} = req.query
+        const tasks = await getUserTasks(res.locals.userId, status, category, amount, page)
+        const totalTasks =  await getNumberOfUsersTasks(res.locals.userId, status, category)
+        const number_of_tasks = totalTasks.length
         const activities = await activity.find({})
 
         // add points to tasks
@@ -26,7 +28,7 @@ module.exports = {
                 photos: it.photos
             }
         })
-
+        res.setHeader("tasksTotalNumber", number_of_tasks)
         res.status(200).send(tasksToResponse)
         res.end()
     }

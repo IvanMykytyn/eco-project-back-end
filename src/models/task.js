@@ -16,7 +16,6 @@ const taskSchema = new mongoose.Schema({
 taskSchema.methods.toJSON = function() {
      let task = this.toObject()
      delete task.user_id
-     delete task._id
      delete task.__v
      return task
 }

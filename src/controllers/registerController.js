@@ -24,7 +24,7 @@ module.exports = {
 
       // Create token
       const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY, {
-        expiresIn: "1d",
+        expiresIn: "3d",
       });
       // save user token
       user.token = token;

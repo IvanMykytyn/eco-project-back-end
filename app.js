@@ -6,17 +6,12 @@ const express = require("express");
 const app = express();
 
 const {
-  GoogleAuthRedirect,
-  GoogleAuthController,
-  notFoundErrorController,
+  notFoundErrorController
 } = require("./src/controllers");
 
 
 const { registerRouter, loginRouter, activitiesRouter, taskRouter, taskHistoryRouter, userInformationRouter,
-  ratingRouter } = require("./src/routes");
-
-
-
+  ratingRouter, googleAuthRouter } = require("./src/routes");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -30,11 +25,7 @@ app.use("/task", taskRouter)
 app.use("/taskHistory", taskHistoryRouter)
 app.use("/userInformation", userInformationRouter)
 app.use("/rating", ratingRouter);
-
-// url for register or login
-app.get("/auth/google", GoogleAuthRedirect);
-// url for redirecting
-app.get("/auth/google/profile", GoogleAuthController);
+app.use("/auth/google", googleAuthRouter);
 
 app.all("*", notFoundErrorController);
 

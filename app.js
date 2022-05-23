@@ -12,7 +12,7 @@ const {
 
 const {
     registerRouter, loginRouter, activitiesRouter, taskRouter, taskHistoryRouter, userInformationRouter,
-    ratingRouter, googleAuthRouter
+    ratingRouter, googleAuthRouter, tasksDoneAmountRouter
 } = require("./src/routes");
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -22,12 +22,13 @@ app.use(cors());
 
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
-app.use("/activities", activitiesRouter)
-app.use("/task", taskRouter)
-app.use("/taskHistory", taskHistoryRouter)
-app.use("/userInformation", userInformationRouter)
+app.use("/activities", activitiesRouter);
+app.use("/task", taskRouter);
+app.use("/taskHistory", taskHistoryRouter);
+app.use("/userInformation", userInformationRouter);
 app.use("/rating", ratingRouter);
 app.use("/auth/google", googleAuthRouter);
+app.use("/tasks/done", tasksDoneAmountRouter);
 
 app.all("*", notFoundErrorController);
 

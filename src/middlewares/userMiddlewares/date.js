@@ -1,4 +1,5 @@
 let validateDate = require("validate-date");
+const {sendResponse} = require("../../helpers/sendResponse");
 
 module.exports = {
     dateFormatValidity(req,res,next){
@@ -10,15 +11,13 @@ module.exports = {
                 dateFormat="yyyy-mm-dd")
             if(!isValid)
             {
-                res.status(400).send({message: "bad date format"})
-                res.end()
+                sendResponse(res, 400, "bad date format")
             }else
             {
                 next()
             }
         }catch (e) {
-            res.status(400).send({message: "bad date format"})
-            res.end()
+            sendResponse(res, 400, "bad date format")
         }
 
     },
@@ -31,8 +30,7 @@ module.exports = {
         const current_year =  currentTime.getFullYear()
 
         if(parseInt(year) > current_year || parseInt(year) <= 1940){
-            res.status(400).send({message: "wrong year of birth"})
-            res.end()
+            sendResponse(res, 400, "wrong year of birth")
           }else{
             next()
         }

@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const { createUser } = require("../services/userService");
 const jwt = require("jsonwebtoken");
+const {sendResponse} = require("../helpers/sendResponse");
 
 module.exports = {
   async registerController(req, res) {
@@ -31,9 +32,7 @@ module.exports = {
       // return new user
       return res.status(201).json(user);
     } catch (e) {
-      console.log(e);
-      res.status(500).send({message: e.message});
-      res.end();
+      sendResponse(res, 500, e.message)
     }
   },
 };

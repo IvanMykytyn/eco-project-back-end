@@ -1,4 +1,5 @@
 let passwordValidator = require('password-validator');
+const {sendResponse} = require("../../helpers/sendResponse");
 let lastNameSchema = new passwordValidator();
 
 lastNameSchema
@@ -6,6 +7,7 @@ lastNameSchema
     .is().max(25, "last name must be no more than 25 characters")
     .has().not().digits(0, "last name should not include digits")
     .has().not().spaces(0, "last name should not include spaces")
+    .has().not().symbols(0, "last name should not include special symbols")
 
 
 module.exports = {
@@ -14,26 +16,20 @@ module.exports = {
             let isValid = lastNameSchema.validate(req.body.last_name) // true or false
 
             if (typeof (req.body.last_name) !== "string") {
-                res.statusCode = 400
-                res.send({message: "last name must be a string"})
-                res.end()
-
+                sendResponse(res, 400, "last name must be a string")
             } else if (!isValid){
-                res.statusCode = 400
                 // array of objects {details: true}
                 let validationData = lastNameSchema.validate(req.body.last_name, {details: true})
                 // filter it
                 let responseData = validationData.map((item) => {
                     return item.message
                 })
-                res.send({message: responseData[0]})
-                res.end()
+                sendResponse(res, 400, responseData[0])
             } else {
                 next()
             }
         } catch (e) {
-            res.status(500).send({message: e.message})
-            res.end()
+            sendResponse(res, 500, e.message)
         }
 
     }

@@ -10,11 +10,9 @@ firstNameSchema
     .has().not().symbols(0, "first name should not include special symbols")
 
 
-
 module.exports = {
     firstNameValidity(req, res, next) {
-        try
-        {
+        try {
             let isValid = firstNameSchema.validate(req.body.first_name) // true or false
 
             if (typeof (req.body.first_name) !== "string") {
@@ -30,7 +28,7 @@ module.exports = {
             } else {
                 next()
             }
-        }catch (e) {
+        } catch (e) {
             sendResponse(res, 500, e.message)
         }
 

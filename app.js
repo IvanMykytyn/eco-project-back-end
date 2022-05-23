@@ -6,14 +6,16 @@ const express = require("express");
 const app = express();
 
 const {
-  notFoundErrorController
+    notFoundErrorController
 } = require("./src/controllers");
 
 
-const { registerRouter, loginRouter, activitiesRouter, taskRouter, taskHistoryRouter, userInformationRouter,
-  ratingRouter, googleAuthRouter } = require("./src/routes");
+const {
+    registerRouter, loginRouter, activitiesRouter, taskRouter, taskHistoryRouter, userInformationRouter,
+    ratingRouter, googleAuthRouter
+} = require("./src/routes");
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 
 app.use(cors());

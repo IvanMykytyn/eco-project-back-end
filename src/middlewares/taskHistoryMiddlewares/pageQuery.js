@@ -8,14 +8,13 @@ module.exports = {
                 next()
             } else if (!Number.isInteger(Number(page)) || Number(page) <= 0) {
                 throw new Error("bad pages query")
-            }else if(page && amount === "all"){
+            } else if (page && amount === "all") {
                 throw new Error("amount should be an integer when you pass a page")
-            }
-            else {
+            } else {
                 next()
             }
         } catch (e) {
-             sendResponse(res, 500,e.message)
+            sendResponse(res, 500, e.message)
         }
 
 

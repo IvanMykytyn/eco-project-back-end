@@ -1,6 +1,6 @@
-const { Router } = require("express");
+const {Router} = require("express");
 
-const { loginController } = require("../controllers/loginController");
+const {loginController} = require("../controllers/loginController");
 
 let loginRouter = Router();
 

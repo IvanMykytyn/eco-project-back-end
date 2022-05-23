@@ -5,7 +5,7 @@ const {loginController} = require("./loginController")
 const {activitiesController} = require("./activitiesController")
 const {tasksController} = require("./tasksController")
 const {userInformationController} = require("./userInformationController")
-const { ratingController } = require("./ratingController");
+const {ratingController} = require("./ratingController");
 
 module.exports =
     {

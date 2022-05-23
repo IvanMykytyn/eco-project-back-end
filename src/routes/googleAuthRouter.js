@@ -1,6 +1,6 @@
-const { Router } = require("express");
+const {Router} = require("express");
 
-const { googleAuthController } = require("../controllers/GoogleAuthController");
+const {googleAuthController} = require("../controllers/GoogleAuthController");
 
 let googleAuthRouter = Router();
 

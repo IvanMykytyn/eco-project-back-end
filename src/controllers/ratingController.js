@@ -2,7 +2,10 @@ const task = require("../models/task");
 const user = require("../models/user");
 const activity = require("../models/activity");
 
-const {sendResponse} = require("../helpers/sendResponse");
+const { findUserByEmail } = require("../services/userService");
+
+const { sendResponse } = require("../helpers/sendResponse");
+
 
 function getFavorite(arr) {
     if (arr.length === 1) {
@@ -17,11 +20,16 @@ function getFavorite(arr) {
 }
 
 module.exports = {
-    async ratingController(req, res) {
-        try {
-            const tasks = await task.find({});
-            const users = await user.find({});
-            const activities = await activity.find({});
+  async ratingController(req, res) {
+    try {
+      const { category } = req.query;
+
+      const userEmail = req.headers.email;
+
+      const tasks = await task.find({});
+      let users = await user.find({});
+      const activities = await activity.find({});
+
 
             // all users
             users.forEach((currentUser) => {
@@ -55,28 +63,41 @@ module.exports = {
                     currentUser.last_name.slice(1).toLowerCase();
                 //
 
-                // set user favorite category
-                currentUser.favorite = getFavorite(categoryArray)
-                    ? getFavorite(categoryArray)
-                    : "none";
-
-                //
-            });
-
-            const userRating = users.map((user) => {
-                return {
-                    full_name: user.full_name,
-                    points: user.points,
-                    count_of_tasks: user.count_of_tasks,
-                    favorite: user.favorite,
-                };
-            });
-
-            res.status(200);
-            res.send(userRating);
-            res.end();
-        } catch (e) {
-            sendResponse(res, 500, e.message);
+        // set user favorite category
+        if (category && getFavorite(categoryArray) === category) {
+          currentUser.favorite = getFavorite(categoryArray);
+        } else if (category && getFavorite(categoryArray) !== category) {
+          currentUser.favorite = undefined;
+        } else {
+          currentUser.favorite = getFavorite(categoryArray);
         }
-    },
+      });
+
+      const userRating = users
+        .filter((user) => user.favorite)
+        .map((user) => {
+          return {
+            _id: user._id,
+            full_name: user.full_name,
+            points: user.points,
+            count_of_tasks: user.count_of_tasks,
+            favorite: user.favorite,
+          };
+        });
+
+      if (userEmail) {
+        const userId = await findUserByEmail(userEmail);
+        res.setHeader("user", userId._id);
+      } else {
+        res.setHeader("user", null);
+      }
+
+      res.setHeader("tasksTotalNumber", userRating.length);
+      res.status(200).send(userRating);
+      res.end();
+    } catch (e) {
+      sendResponse(res, 500, e.message);
+    }
+  },
+
 };

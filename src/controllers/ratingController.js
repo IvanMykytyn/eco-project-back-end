@@ -2,6 +2,8 @@ const task = require("../models/task");
 const user = require("../models/user");
 const activity = require("../models/activity");
 
+const { findUserByEmail } = require("../services/userService");
+
 const { sendResponse } = require("../helpers/sendResponse");
 
 function getFavorite(arr) {
@@ -20,6 +22,8 @@ module.exports = {
   async ratingController(req, res) {
     try {
       const { category } = req.query;
+
+      const userEmail = req.headers.email;
 
       const tasks = await task.find({});
       let users = await user.find({});
@@ -78,6 +82,13 @@ module.exports = {
             favorite: user.favorite,
           };
         });
+
+      if (userEmail) {
+        const userId = await findUserByEmail(userEmail);
+        res.setHeader("user", userId._id);
+      } else {
+        res.setHeader("user", null);
+      }
 
       res.setHeader("tasksTotalNumber", userRating.length);
       res.status(200).send(userRating);

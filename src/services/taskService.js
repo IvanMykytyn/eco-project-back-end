@@ -19,26 +19,36 @@ module.exports = {
             return taskSchema.find({user_id: userId, activity_type: category}).limit(parseInt(amount))
         } else if (status === "any" && category === "any" && amount !== "all" && !page) {
             return taskSchema.find({user_id: userId}).limit(parseInt(amount))
-        } else if(status === "any" && category === "any" && page){
+        } else if (status === "any" && category === "any" && page) {
             return taskSchema.find({user_id: userId}).skip(parseInt(amount) * (parseInt(page) - 1)).limit(parseInt(amount))
-        }else if(status !== "any" && category === "any" && page){
-            return taskSchema.find({user_id: userId, status}).skip(parseInt(amount) * (parseInt(page) - 1)).limit(parseInt(amount))
-        }else if(status === "any" && category !== "any" && page){
-            return taskSchema.find({user_id: userId, activity_type: category}).skip(parseInt(amount) * (parseInt(page) - 1)).limit(parseInt(amount))
-        }else if(status !== "any" && category !== "any" && page){
-            return taskSchema.find({user_id: userId, status, activity_type: category}).skip(parseInt(amount) * (parseInt(page) - 1)).limit(parseInt(amount))
+        } else if (status !== "any" && category === "any" && page) {
+            return taskSchema.find({
+                user_id: userId,
+                status
+            }).skip(parseInt(amount) * (parseInt(page) - 1)).limit(parseInt(amount))
+        } else if (status === "any" && category !== "any" && page) {
+            return taskSchema.find({
+                user_id: userId,
+                activity_type: category
+            }).skip(parseInt(amount) * (parseInt(page) - 1)).limit(parseInt(amount))
+        } else if (status !== "any" && category !== "any" && page) {
+            return taskSchema.find({
+                user_id: userId,
+                status,
+                activity_type: category
+            }).skip(parseInt(amount) * (parseInt(page) - 1)).limit(parseInt(amount))
         } else {
             throw new Error("can't get")
         }
     },
-    async getNumberOfUsersTasks(userId, status, category){
-        if(status === "any" && category === "any"){
+    async getNumberOfUsersTasks(userId, status, category) {
+        if (status === "any" && category === "any") {
             return taskSchema.find({user_id: userId})
-        }else if(status !== "any" && category === "any"){
+        } else if (status !== "any" && category === "any") {
             return taskSchema.find({user_id: userId, status})
-        }else if (status !== "any" && category !== "any"){
+        } else if (status !== "any" && category !== "any") {
             return taskSchema.find({user_id: userId, status, activity_type: category})
-        }else if(status === "any" && category !== "any"){
+        } else if (status === "any" && category !== "any") {
             return taskSchema.find({user_id: userId, activity_type: category})
         }
     }

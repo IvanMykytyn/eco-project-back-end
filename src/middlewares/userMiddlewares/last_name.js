@@ -17,7 +17,7 @@ module.exports = {
 
             if (typeof (req.body.last_name) !== "string") {
                 sendResponse(res, 400, "last name must be a string")
-            } else if (!isValid){
+            } else if (!isValid) {
                 // array of objects {details: true}
                 let validationData = lastNameSchema.validate(req.body.last_name, {details: true})
                 // filter it

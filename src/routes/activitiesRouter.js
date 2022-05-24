@@ -1,5 +1,5 @@
-const { Router } = require("express");
-const {activitiesController}= require("../controllers")
+const {Router} = require("express");
+const {activitiesController} = require("../controllers")
 
 let activitiesRouter = Router();
 

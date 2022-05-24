@@ -5,7 +5,7 @@ const {sendResponse} = require("../helpers/sendResponse");
 
 module.exports = {
     async userInformationController(req, res) {
-        try{
+        try {
             const {first_name, last_name, email, date_of_birth, password, userId} = req.body
             const encryptedPassword = await bcrypt.hash(password, 10);
 
@@ -21,7 +21,7 @@ module.exports = {
 
             res.status(200).send(user)
             res.end()
-        }catch (e) {
+        } catch (e) {
             sendResponse(res, 500, e.message)
         }
 

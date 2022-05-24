@@ -19,8 +19,10 @@ function getFavorite(arr) {
 module.exports = {
   async ratingController(req, res) {
     try {
+      const { category } = req.query;
+
       const tasks = await task.find({});
-      const users = await user.find({});
+      let users = await user.find({});
       const activities = await activity.find({});
 
       // all users
@@ -56,24 +58,29 @@ module.exports = {
         //
 
         // set user favorite category
-        currentUser.favorite = getFavorite(categoryArray)
-          ? getFavorite(categoryArray)
-          : "none";
-
-        //
+        if (category && getFavorite(categoryArray) === category) {
+          currentUser.favorite = getFavorite(categoryArray);
+        } else if (category && getFavorite(categoryArray) !== category) {
+          currentUser.favorite = undefined;
+        } else {
+          currentUser.favorite = getFavorite(categoryArray);
+        }
       });
 
-      const userRating = users.map((user) => {
-        return {
-          full_name: user.full_name,
-          points: user.points,
-          count_of_tasks: user.count_of_tasks,
-          favorite: user.favorite,
-        };
-      });
+      const userRating = users
+        .filter((user) => user.favorite)
+        .map((user) => {
+          return {
+            _id: user._id,
+            full_name: user.full_name,
+            points: user.points,
+            count_of_tasks: user.count_of_tasks,
+            favorite: user.favorite,
+          };
+        });
 
-      res.status(200);
-      res.send(userRating);
+      res.setHeader("tasksTotalNumber", userRating.length);
+      res.status(200).send(userRating);
       res.end();
     } catch (e) {
       sendResponse(res, 500, e.message);

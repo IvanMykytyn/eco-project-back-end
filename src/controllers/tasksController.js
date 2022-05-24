@@ -24,7 +24,7 @@ module.exports = {
             const user_points = await addPointsToTheUser(task.numerical_indicators, task.activity_type, task.user_id)
             res.status(201).send({task: task_to_response, user_points})
             res.end()
-        }catch (e) {
+        } catch (e) {
             sendResponse(res, 500, e.message)
         }
     }

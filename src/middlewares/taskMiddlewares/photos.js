@@ -1,13 +1,12 @@
 const {sendResponse} = require("../../helpers/sendResponse");
 module.exports = {
-    isPhotosArrayValid(req,res,next)
-    {
+    isPhotosArrayValid(req, res, next) {
         try {
             const {photos} = req.body
-            if(!Array.isArray(photos)){
+            if (!Array.isArray(photos)) {
                 throw new Error("\"photos\" should be an Array")
             }
-            if(photos.length > 3){
+            if (photos.length > 3) {
                 throw new Error("\"photos\" must be no more than 3 length")
             }
             // for(let i = 0;i<photos.length;i++){
@@ -17,7 +16,7 @@ module.exports = {
             // }
 
             next()
-        }catch (e) {
+        } catch (e) {
             sendResponse(res, 400, e.message)
         }
 

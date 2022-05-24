@@ -3,8 +3,7 @@ const {sendResponse} = require("../../helpers/sendResponse");
 
 module.exports = {
     async isUserAlreadyExist(req, res, next) {
-        try
-        {
+        try {
             const email = req.body.email.toLowerCase();
 
             // check if user already exist
@@ -15,7 +14,7 @@ module.exports = {
             } else {
                 next()
             }
-        }catch (e) {
+        } catch (e) {
             sendResponse(res, 500, e.message)
         }
 

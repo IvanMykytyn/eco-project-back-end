@@ -5,7 +5,7 @@ const activitySchema = new mongoose.Schema({
     title: {type: String},
     description: {type: String},
     path_to_icon: {type: String},
-    type: {type: String, enum : activityTypeEnum},
+    type: {type: String, enum: activityTypeEnum},
     number_of_points: {type: Number},
     unit_of_measure: {type: String},
 });

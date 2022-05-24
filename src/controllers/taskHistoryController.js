@@ -5,7 +5,7 @@ module.exports = {
     async taskHistoryController(req, res) {
         const {status, category, amount, page} = req.query
         const tasks = await getUserTasks(res.locals.userId, status, category, amount, page)
-        const totalTasks =  await getNumberOfUsersTasks(res.locals.userId, status, category)
+        const totalTasks = await getNumberOfUsersTasks(res.locals.userId, status, category)
         const number_of_tasks = totalTasks.length
         const activities = await activity.find({})
 

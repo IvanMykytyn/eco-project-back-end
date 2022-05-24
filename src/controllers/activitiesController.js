@@ -5,7 +5,7 @@ const {sendResponse} = require("../helpers/sendResponse");
 
 module.exports = {
     async activitiesController(req, res) {
-        try{
+        try {
             const activities = await activity.find({})
             const activities_to_response = setIconToResponseObjects(activities)
 
@@ -13,7 +13,7 @@ module.exports = {
 
             res.send(activities_to_response)
             res.end()
-        }catch (e) {
+        } catch (e) {
             sendResponse(res, 500, e.message)
         }
 

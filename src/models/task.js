@@ -7,7 +7,7 @@ const taskSchema = new mongoose.Schema({
     activity_type: {type: String, enum: activityTypeEnum, required: true},
     status: {type: String, enum: statusEnum, required: true},
     users_task_description: {type: String, required: true},
-    numerical_indicators: {type: Number, required: true},
+    numerical_indicators: {type: Number},
     admin_message: {type: String},
     location: {type: String},
     photos: {type: [Buffer], required: true}

@@ -62,12 +62,15 @@ module.exports = {
         //
 
         // set user favorite category
-        if (category && getFavorite(categoryArray) === category) {
-          currentUser.favorite = getFavorite(categoryArray);
-        } else if (category && getFavorite(categoryArray) !== category) {
+        const favoriteCategory = getFavorite(categoryArray);
+        if (category && category === "any") {
+          currentUser.favorite = favoriteCategory;
+        } else if (category && favoriteCategory === category) {
+          currentUser.favorite = favoriteCategory;
+        } else if (category && favoriteCategory !== category) {
           currentUser.favorite = undefined;
         } else {
-          currentUser.favorite = getFavorite(categoryArray);
+          currentUser.favorite = favoriteCategory;
         }
       });
 

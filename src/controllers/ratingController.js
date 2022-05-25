@@ -6,17 +6,16 @@ const { findUserByEmail } = require("../services/userService");
 
 const { sendResponse } = require("../helpers/sendResponse");
 
-
 function getFavorite(arr) {
-    if (arr.length === 1) {
-        return arr[0];
-    }
-    return arr
-        .sort(
-            (a, b) =>
-                arr.filter((v) => v === a).length - arr.filter((v) => v === b).length
-        )
-        .pop();
+  if (arr.length === 1) {
+    return arr[0];
+  }
+  return arr
+    .sort(
+      (a, b) =>
+        arr.filter((v) => v === a).length - arr.filter((v) => v === b).length
+    )
+    .pop();
 }
 
 module.exports = {
@@ -30,46 +29,48 @@ module.exports = {
       let users = await user.find({});
       const activities = await activity.find({});
 
+      // all users
+      users.forEach((currentUser) => {
+        // initial state
+        currentUser.points = 0;
+        currentUser.count_of_tasks = 0;
+        var categoryArray = [];
 
-            // all users
-            users.forEach((currentUser) => {
-                // initial state
-                currentUser.points = 0;
-                currentUser.count_of_tasks = 0;
-                var categoryArray = [];
+        // check tasks that user did
+        tasks.forEach((currentTask) => {
+          if (currentTask.user_id.toString() == currentUser._id.toString()) {
+            // check how many points it cost
+            const taskActivity = activities.find(
+              (currentActivity) =>
+                currentActivity.title == currentTask.activity_type
+            );
 
-                // check tasks that user did
-                tasks.forEach((currentTask) => {
-                    if (currentTask.user_id.toString() == currentUser._id.toString()) {
-                        // check how many points it cost
-                        const taskActivity = activities.find(
-                            (currentActivity) =>
-                                currentActivity.title == currentTask.activity_type
-                        );
+            // add points, count of tasks, and category
+            currentUser.points +=
+              taskActivity.number_of_points * currentTask.numerical_indicators;
+            currentUser.count_of_tasks += 1;
+            categoryArray.push(taskActivity.title);
+          }
+        });
 
-                        // add points, count of tasks, and category
-                        currentUser.points +=
-                            taskActivity.number_of_points * currentTask.numerical_indicators;
-                        currentUser.count_of_tasks += 1;
-                        categoryArray.push(taskActivity.title);
-                    }
-                });
-
-                //set user full name
-                currentUser.full_name =
-                    currentUser.first_name[0].toUpperCase() +
-                    ". " +
-                    currentUser.last_name[0].toUpperCase() +
-                    currentUser.last_name.slice(1).toLowerCase();
-                //
+        //set user full name
+        currentUser.full_name =
+          currentUser.first_name[0].toUpperCase() +
+          ". " +
+          currentUser.last_name[0].toUpperCase() +
+          currentUser.last_name.slice(1).toLowerCase();
+        //
 
         // set user favorite category
-        if (category && getFavorite(categoryArray) === category) {
-          currentUser.favorite = getFavorite(categoryArray);
-        } else if (category && getFavorite(categoryArray) !== category) {
+        const favoriteCategory = getFavorite(categoryArray);
+        if (category && category === "any") {
+          currentUser.favorite = favoriteCategory;
+        } else if (category && favoriteCategory === category) {
+          currentUser.favorite = favoriteCategory;
+        } else if (category && favoriteCategory !== category) {
           currentUser.favorite = undefined;
         } else {
-          currentUser.favorite = getFavorite(categoryArray);
+          currentUser.favorite = favoriteCategory;
         }
       });
 
@@ -99,5 +100,4 @@ module.exports = {
       sendResponse(res, 500, e.message);
     }
   },
-
 };

@@ -27,7 +27,7 @@ app.use("/task", taskRouter);
 app.use("/taskHistory", taskHistoryRouter);
 app.use("/userInformation", userInformationRouter);
 app.use("/rating", ratingRouter);
-//app.use("/auth/google", googleAuthRouter);
+app.use("/auth/google", googleAuthRouter);
 app.use("/tasks/done", tasksDoneAmountRouter);
 app.use("/user/points", userPointsRouter)
 

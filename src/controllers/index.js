@@ -6,6 +6,7 @@ const {tasksController} = require("./tasksController")
 const {userInformationController} = require("./userInformationController")
 const {ratingController} = require("./ratingController");
 const {tasksDoneAmountController} = require("./tasksDoneAmountController")
+const {userPointsController} = require("./userPointsController")
 
 module.exports =
     {
@@ -16,5 +17,6 @@ module.exports =
         tasksController,
         userInformationController,
         ratingController,
-        tasksDoneAmountController
+        tasksDoneAmountController,
+        userPointsController
     }

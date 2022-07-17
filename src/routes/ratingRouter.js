@@ -1,9 +1,13 @@
-const {Router} = require("express");
-const {ratingController} = require("../controllers");
-const {isJWTInHeadersExpired} = require("../middlewares/taskHistoryMiddlewares")
+const { Router } = require('express')
+const { ratingController } = require('../controllers')
 
-let ratingRouter = Router();
+const {
+  amountValidity,
+  pageQuery,
+} = require('../middlewares/taskHistoryMiddlewares')
 
-ratingRouter.get("/", isJWTInHeadersExpired, ratingController);
+let ratingRouter = Router()
 
-module.exports = ratingRouter;
+ratingRouter.get('/', amountValidity, pageQuery, ratingController)
+
+module.exports = ratingRouter

@@ -28,8 +28,8 @@ module.exports = {
                 photos: it.photos
             }
         })
-        res.setHeader("tasksTotalNumber", number_of_tasks)
-        res.status(200).send(tasksToResponse)
+        
+        res.status(200).send({tasks: tasksToResponse, totalTasks: number_of_tasks})
         res.end()
     }
 }

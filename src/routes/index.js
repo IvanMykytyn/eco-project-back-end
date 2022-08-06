@@ -7,6 +7,7 @@ const userInformationRouter = require("./userInformationRouter")
 const ratingRouter = require("./ratingRouter");
 const googleAuthRouter = require("./googleAuthRouter");
 const tasksDoneAmountRouter = require("./tasksDoneAmountRouter")
+const userPointsRouter = require("./userPointsRouter")
 
 module.exports = {
     loginRouter,
@@ -17,5 +18,6 @@ module.exports = {
     userInformationRouter,
     ratingRouter,
     googleAuthRouter,
-    tasksDoneAmountRouter
+    tasksDoneAmountRouter,
+    userPointsRouter
 }

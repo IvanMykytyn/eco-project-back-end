@@ -1,8 +1,13 @@
-const {Router} = require("express");
-const {ratingController} = require("../controllers");
+const { Router } = require('express')
+const { ratingController } = require('../controllers')
 
-let ratingRouter = Router();
+const {
+  amountValidity,
+  pageQuery,
+} = require('../middlewares/taskHistoryMiddlewares')
 
-ratingRouter.get("/", ratingController);
+let ratingRouter = Router()
 
-module.exports = ratingRouter;
+ratingRouter.get('/', amountValidity, pageQuery, ratingController)
+
+module.exports = ratingRouter

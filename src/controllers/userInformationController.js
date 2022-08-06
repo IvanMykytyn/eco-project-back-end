@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const {updateUserInformation} = require("../services/userService");
 const {sendResponse} = require("../helpers/sendResponse");
 
@@ -18,6 +19,12 @@ module.exports = {
                     userId
                 }
             );
+
+            // Create token
+            const token = jwt.sign({userId: user._id}, process.env.TOKEN_KEY, {
+                expiresIn: "3d",
+            });
+            user.token = token;
 
             res.status(200).send(user)
             res.end()

@@ -1,4 +1,3 @@
-const {GoogleAuthRedirect, GoogleAuthController} = require("./GoogleAuthController")
 const {notFoundErrorController} = require("./notFoundErrorController")
 const {registerController} = require("./registerController")
 const {loginController} = require("./loginController")
@@ -7,11 +6,10 @@ const {tasksController} = require("./tasksController")
 const {userInformationController} = require("./userInformationController")
 const {ratingController} = require("./ratingController");
 const {tasksDoneAmountController} = require("./tasksDoneAmountController")
+const {userPointsController} = require("./userPointsController")
 
 module.exports =
     {
-        GoogleAuthRedirect,
-        GoogleAuthController,
         notFoundErrorController,
         registerController,
         loginController,
@@ -19,5 +17,6 @@ module.exports =
         tasksController,
         userInformationController,
         ratingController,
-        tasksDoneAmountController
+        tasksDoneAmountController,
+        userPointsController
     }

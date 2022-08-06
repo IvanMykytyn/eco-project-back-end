@@ -45,5 +45,9 @@ module.exports = {
 
     async updateUserInformation(user) {
         return User.findOneAndUpdate({_id: user.userId}, user, {new: true});
+    },
+
+    async getUserPoints(user_id){
+        return User.findOne({_id: user_id}, {"points": 1, '_id': false})
     }
 };
